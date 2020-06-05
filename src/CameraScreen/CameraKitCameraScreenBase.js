@@ -9,7 +9,7 @@ import {
   NativeModules,
   Platform,
   SafeAreaView,
-  processColor,
+  processColor
 } from 'react-native';
 import _ from 'lodash';
 import CameraKitCamera from './../CameraKitCamera';
@@ -30,11 +30,11 @@ const FRAME_HEIGHT = 200;
 
 export default class CameraScreenBase extends Component {
   static propTypes = {
-    allowCaptureRetake: PropTypes.bool,
+    allowCaptureRetake: PropTypes.bool
   };
 
   static defaultProps = {
-    allowCaptureRetake: false,
+    allowCaptureRetake: false
   };
 
   constructor(props) {
@@ -43,16 +43,16 @@ export default class CameraScreenBase extends Component {
     this.flashArray = [
       {
         mode: FLASH_MODE_AUTO,
-        image: _.get(this.props, 'flashImages.auto'),
+        image: _.get(this.props, 'flashImages.auto')
       },
       {
         mode: FLASH_MODE_ON,
-        image: _.get(this.props, 'flashImages.on'),
+        image: _.get(this.props, 'flashImages.on')
       },
       {
         mode: FLASH_MODE_OFF,
-        image: _.get(this.props, 'flashImages.off'),
-      },
+        image: _.get(this.props, 'flashImages.off')
+      }
     ];
     this.state = {
       captureImages: [],
@@ -63,7 +63,7 @@ export default class CameraScreenBase extends Component {
       ratioArrayPosition: -1,
       imageCaptured: undefined,
       captured: false,
-      scannerOptions: {},
+      scannerOptions: {}
     };
     this.onSetFlash = this.onSetFlash.bind(this);
     this.onSetTorch = this.onSetTorch.bind(this);
@@ -81,7 +81,7 @@ export default class CameraScreenBase extends Component {
       cameraOptions,
       scannerOptions,
       ratios: ratios || [],
-      ratioArrayPosition: ratios.length > 0 ? 0 : -1,
+      ratioArrayPosition: ratios.length > 0 ? 0 : -1
     });
   }
 
@@ -95,7 +95,7 @@ export default class CameraScreenBase extends Component {
     const cameraOptions = this.props.cameraOptions || {
       flashMode: 'auto',
       focusMode: 'on',
-      zoomMode: 'on',
+      zoomMode: 'on'
     };
     if (this.props.cameraRatioOverlay) {
       const overlay = this.props.cameraRatioOverlay;
@@ -240,7 +240,7 @@ export default class CameraScreenBase extends Component {
             flexDirection: 'row',
             alignItems: 'center',
             paddingRight: 10,
-            paddingLeft: 20,
+            paddingLeft: 20
           }}
         >
           <Text style={styles.ratioBestText}>
@@ -252,7 +252,7 @@ export default class CameraScreenBase extends Component {
               flexDirection: 'row',
               justifyContent: 'flex-end',
               alignItems: 'center',
-              padding: 8,
+              padding: 8
             }}
             onPress={() => this.onRatioButtonPressed()}
           >
@@ -271,7 +271,7 @@ export default class CameraScreenBase extends Component {
         type,
         captureImages: this.state.captureImages,
         captureRetakeMode,
-        image,
+        image
       });
     }
   }
@@ -290,7 +290,7 @@ export default class CameraScreenBase extends Component {
         this.setState(
           {
             imageCaptured: undefined,
-            captureImages: _.concat(this.state.captureImages, savedImage),
+            captureImages: _.concat(this.state.captureImages, savedImage)
           },
           () => {
             this.sendBottomButtonPressedAction(type, captureRetakeMode);
@@ -319,7 +319,7 @@ export default class CameraScreenBase extends Component {
         <TouchableOpacity
           style={[
             styles.bottomButton,
-            { justifyContent: type === 'left' ? 'flex-start' : 'flex-end' },
+            { justifyContent: type === 'left' ? 'flex-start' : 'flex-end' }
           ]}
           onPress={() => this.onButtonPressed(type)}
         >
@@ -333,15 +333,11 @@ export default class CameraScreenBase extends Component {
 
   renderBottomButtons() {
     return (
-      !this.props.hideControls && (
-        <SafeAreaView
-          style={[styles.bottomButtons, { backgroundColor: '#ffffff00' }]}
-        >
-          {this.renderBottomButton('left')}
-          {this.renderCaptureButton()}
-          {this.renderBottomButton('right')}
-        </SafeAreaView>
-      )
+      <SafeAreaView style={[styles.bottomButtons]}>
+        {this.renderBottomButton('left')}
+        {this.renderCaptureButton()}
+        {this.renderBottomButton('right')}
+      </SafeAreaView>
     );
   }
 
@@ -375,7 +371,7 @@ export default class CameraScreenBase extends Component {
         this.setState({
           captured: true,
           imageCaptured: image,
-          captureImages: _.concat(this.state.captureImages, image),
+          captureImages: _.concat(this.state.captureImages, image)
         });
       }
       this.sendBottomButtonPressedAction('capture', false, image);
@@ -392,7 +388,7 @@ export default class CameraScreenBase extends Component {
     );
     this.setState({
       ratioArrayPosition: newRatiosArrayPosition,
-      cameraOptions: newCameraOptions,
+      cameraOptions: newCameraOptions
     });
   }
 
@@ -406,31 +402,31 @@ const styles = StyleSheet.create(
   _.merge(styleObject, {
     textStyle: {
       color: 'white',
-      fontSize: 20,
+      fontSize: 20
     },
     ratioBestText: {
       color: 'white',
-      fontSize: 18,
+      fontSize: 18
     },
     ratioText: {
       color: '#ffc233',
-      fontSize: 18,
+      fontSize: 18
     },
     topButtons: {
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
       paddingTop: 8,
-      paddingBottom: 0,
+      paddingBottom: 0
     },
     cameraContainer: {
       flex: 10,
-      flexDirection: 'column',
+      flexDirection: 'column'
     },
     captureButtonContainer: {
       flex: 1,
       justifyContent: 'center',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     textNumberContainer: {
       position: 'absolute',
@@ -439,20 +435,20 @@ const styles = StyleSheet.create(
       bottom: 0,
       right: 0,
       justifyContent: 'center',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     bottomButton: {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      padding: 10,
+      padding: 10
     },
     bottomContainerGap: {
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'flex-end',
       alignItems: 'center',
-      padding: 10,
-    },
+      padding: 10
+    }
   })
 );

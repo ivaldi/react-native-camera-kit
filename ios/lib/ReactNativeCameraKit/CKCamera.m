@@ -184,8 +184,9 @@ RCT_ENUM_CONVERTER(CKCameraZoomMode, (@{
         [self setupCaptionSession];
         self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
         [self.layer addSublayer:self.previewLayer];
-        self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         self.previewLayer.orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        
 #endif
         UIView *focusView = [[UIView alloc] initWithFrame:CGRectZero];
         focusView.backgroundColor = [UIColor clearColor];
@@ -528,7 +529,8 @@ RCT_ENUM_CONVERTER(CKCameraZoomMode, (@{
         AVCaptureConnection *connection = [self.stillImageOutput connectionWithMediaType:AVMediaTypeVideo];
         
         // Update the orientation on the still image output video connection before capturing.
-        connection.videoOrientation = self.previewLayer.connection.videoOrientation;
+//        connection.videoOrientation = self.previewLayer.connection.videoOrientation;
+        connection.videoOrientation = [UIDevice currentDevice].orientation;
         
         
         // Capture a still image.
